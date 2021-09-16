@@ -10,13 +10,13 @@ const tasksArr = [
     id: 123,
     text: 'Write Hello World',
     day: 'Sep 24th at 20:00pm',
-    reminder: true,
+    reminder: false,
   },
   {
     id: 345,
     text: 'Have a breakfast',
     day: 'Sep 14th at 7:00am',
-    reminder: true,
+    reminder: false,
   },
   {
     id: 9324,
@@ -26,8 +26,24 @@ const tasksArr = [
   }
 ];
 
+
 function App() {
-  const [tasks, setTasks] = useState(tasksArr);
+  const [tasks, setTasks] = useState(tasksArr); 
+  
+  const deleteTask = (id) => {
+    setTasks(state => state.filter(task => task.id !== id ));
+  };
+
+  const toggleReminder = (id) => {
+    console.log('reminder', id);
+    setTasks(state => state.map(task => task.id === id
+      ? {
+        ...task,
+        reminder: !task.reminder,
+      } 
+      : task
+    ));
+  };
 
   return <>
     <Container
@@ -54,7 +70,14 @@ function App() {
           <Button buttonBg='green'/>
         </Grid>
       </Grid>
-      <Tasks tasks={tasks}/>
+
+      { tasks.length 
+        ? <Tasks tasks={tasks} onDelete={ deleteTask } onToggle={ toggleReminder } />
+        : <Typography variant="subtitle2" component="p" style={{ textAlign: 'center' }}>
+            No task to show
+          </Typography> 
+      }
+      
     </Container>
   </>;
 }
