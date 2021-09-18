@@ -6,7 +6,7 @@ const Tasks = ({ tasks, onDelete, onToggle }) => (
   <Container
     maxWidth="xs"
   >
-    <MuiList>
+    <MuiList style={{ display: 'flex', flexDirection: 'column-reverse' }}>
       { tasks.map(task => (
         <Task task={ task } key={ task.id } onDelete={ onDelete } onToggle={ onToggle }/>
       )) }
